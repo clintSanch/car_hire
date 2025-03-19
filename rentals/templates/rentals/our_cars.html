@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Available Cars{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+    .car-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+    .car-card:hover {
+        transform: scale(1.05);
+    }
+    .car-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .car-info {
+        padding: 15px;
+    }
+    .car-info h3 {
+        margin: 50px 0;
+    }
+    .price {
+        font-size: 1.2em;
+        color: #28a745;
+        font-weight: bold;
+    }
+    .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 15px;
+        background: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .btn:hover {
+        background: #0056b3;
+    }
+</style>
+
+<h2 style="text-align: center;">Available Cars for Hire</h2>
+<div class="container">
+    {% for car in cars %}
+    <div class="car-card">
+        <img src="{{ car.image.url }}" alt="{{ car.name }}">
+        <div class="car-info">
+            <h3>{{ car.name }}</h3>
+            <p>{{ car.location }} - {{ car.distance }} km away</p>
+            <p class="price">KSh {{ car.price_per_day }} per day</p>
+            <a href="{% url 'rentals:book_now_with_car' car.id %}" class="btn">Book Now</a>
+        </div>
+    </div>
+    {% empty %}
+    <p style="text-align: center;">No cars available for hire at the moment.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

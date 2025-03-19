@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Available Cars{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for car in cars %}
+            <li>{{ car.model }} - {{ car.license_plate }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

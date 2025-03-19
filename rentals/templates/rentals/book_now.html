@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Book a Vehicle{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Book a Vehicle</h2>
+    <p>Select a vehicle and fill in the details to request a booking.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="car">Select a Car:</label>
+        <select name="car" required>
+            {% for car in cars %}
+                <option value="{{ car.id }}" {% if selected_car and selected_car.id == car.id %}selected{% endif %}>
+                    {{ car.name }} - {{ car.model }} ({{ car.year }})
+                </option>
+            {% endfor %}
+        </select>
+
+        {{ form.as_p }}
+
+        <button type="submit">Submit Booking</button>
+    </form>
+
+    <a href="{% url 'rentals:our_cars' %}" class="back-link">Back to Our Cars</a>
+</div>
+
+<style>
+    .container {
+        width: 50%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    select, input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .back-link {
+        display: inline-block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #007BFF;
+    }
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
